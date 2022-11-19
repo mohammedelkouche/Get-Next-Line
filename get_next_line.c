@@ -6,22 +6,63 @@
 /*   By: mel-kouc <mel-kouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 12:19:32 by mel-kouc          #+#    #+#             */
-/*   Updated: 2022/11/18 19:38:05 by mel-kouc         ###   ########.fr       */
+/*   Updated: 2022/11/19 22:56:09 by mel-kouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+#include <fcntl.h>
+#include <stdio.h>
 
-char	*ft_getline(int fd, char *str)
+char	*ft_strdup(const char *s1)
+{
+	size_t	len;
+	char	*str;
+	int		i;
+
+	i = 0;
+	len = ft_strlen(s1);
+	str = (char *)malloc(sizeof(char) * (len + 1));
+	if (!str)
+		return (NULL);
+	while (s1[i])
+	{
+		str[i] = s1[i];
+		i++;
+	}
+	str[i] = '\0';
+	return (str);
+}
+
+int	ft_strchr(char *s, char c)
+{
+	int	i;
+
+	i = 0;
+	if (s != NULL)
+	{
+		while (s[i])
+		{
+			if (s[i] == c)
+				return (i);
+			i++;
+		}
+	}
+	return (0);
+}
+
+char	*ft_getstore(int fd, char *stor)
 {
 	char	*buffer;
-	int		read_bytes;
+	ssize_t	read_bytes;
 
-	buffer = malloc((BUFFER_SIZE + 1) * sizeof(char)):
+	buffer = malloc((BUFFER_SIZE + 1) * sizeof(char));
 	if (!buffer)
-		return(NULL);
+		return (NULL);
+	if (!stor)
+		stor = ft_strdup("");
 	read_bytes = 1;
-	while (!ft_strchr(str, '\n') && read_bytes != 0)
+	while (!ft_strchr(stor, '\n') && read_bytes != 0)
 	{
 		read_bytes = read(fd, buffer, BUFFER_SIZE);
 		if (read_bytes == -1)
@@ -30,22 +71,31 @@ char	*ft_getline(int fd, char *str)
 			return (NULL);
 		}
 		buffer[read_bytes] = '\0';
-		str = ft_strjoin(str, buffer);
+		stor = ft_strjoin(stor, buffer);
 	}
 	free(buffer);
-	return (str);
+	return (stor);
 }
 
 char	*get_next_line(int fd)
 {
-	static int	storage;
-	char		*line;
+	static char	*storage;
+	// char		*line; 
 
-	if(fd < 0 || BUFFER_SIZE <= 0)
+	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
-	storage = ft_getline(fd, storage);
+	storage = ft_getstore(fd, storage);
 	if (!storage)
 		return (NULL);
-	
+	return (storage);
 }
 
+// int	main(void)
+// {
+// 	int		fd;
+// 	char	*str;
+
+// 	fd = open("file.txt", O_CREAT | O_RDONLY);
+// 	str = get_next_line(fd);
+// 	printf("%s", str);
+// }
