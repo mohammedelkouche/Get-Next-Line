@@ -6,7 +6,7 @@
 /*   By: mel-kouc <mel-kouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 12:19:32 by mel-kouc          #+#    #+#             */
-/*   Updated: 2022/11/19 22:56:09 by mel-kouc         ###   ########.fr       */
+/*   Updated: 2022/11/20 19:54:05 by mel-kouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,22 +80,29 @@ char	*ft_getstore(int fd, char *stor)
 char	*get_next_line(int fd)
 {
 	static char	*storage;
-	// char		*line; 
+	char		*line;
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
 	storage = ft_getstore(fd, storage);
 	if (!storage)
 		return (NULL);
-	return (storage);
+	line = ft_getline(storage);
+	storage = ft_nextstr(storage);
+	return (line);
 }
 
-// int	main(void)
-// {
-// 	int		fd;
-// 	char	*str;
+int	main(void)
+{
+	int		fd;
+	char	*str;
 
-// 	fd = open("file.txt", O_CREAT | O_RDONLY);
-// 	str = get_next_line(fd);
-// 	printf("%s", str);
-// }
+	fd = open("file.txt", O_CREAT | O_RDONLY);
+	str = get_next_line(fd);
+	str = get_next_line(fd);
+	// str = get_next_line(fd);
+	// str = get_next_line(fd);
+	// str = get_next_line(fd);
+	// str = get_next_line(fd);
+	printf("%s", str);
+}

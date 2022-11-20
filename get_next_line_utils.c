@@ -6,13 +6,12 @@
 /*   By: mel-kouc <mel-kouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 12:19:29 by mel-kouc          #+#    #+#             */
-/*   Updated: 2022/11/19 22:42:28 by mel-kouc         ###   ########.fr       */
+/*   Updated: 2022/11/20 19:52:51 by mel-kouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 #include <stdio.h>
-
 
 size_t	ft_strlen(const char *s)
 {
@@ -49,4 +48,43 @@ char	*ft_strjoin(char *prdata, char *buff)
 	sjoin[i] = '\0';
 	free(prdata);
 	return (sjoin);
+}
+
+char	*ft_getline(char	*str)
+{
+	int		i;
+	int		j;
+	char	*rangeln;
+
+	j = 0;
+	i = ft_strchr(str, '\n');
+	rangeln = malloc(sizeof(char) * (i + 2));
+	if (!rangeln)
+		return (NULL);
+	while (str[j] && j <= i)
+	{
+		rangeln[j] = str[j];
+		j++;
+	}
+	rangeln[j] = '\0';
+	return (rangeln);
+}
+
+char	*ft_nextstr(char *s)
+{
+	char	*newstr;
+	int		len;
+	int		i;
+
+	len = 0;
+	i = ft_strchr(s, '\n');
+	newstr = malloc(sizeof(char) * (ft_strlen(s) - i + 1));
+	if (!newstr)
+		return (NULL);
+	i++;
+	while (s[i])
+		newstr[len++] = s[i++];
+	newstr[len] = '\0';
+	free(s);
+	return (newstr);
 }
