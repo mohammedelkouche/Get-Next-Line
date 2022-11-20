@@ -6,13 +6,20 @@
 /*   By: mel-kouc <mel-kouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 12:19:32 by mel-kouc          #+#    #+#             */
-/*   Updated: 2022/11/20 19:54:05 by mel-kouc         ###   ########.fr       */
+/*   Updated: 2022/11/20 23:30:30 by mel-kouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 #include <fcntl.h>
 #include <stdio.h>
+
+char	*freeall(char *data, char *buffer)
+{
+	free(data);
+	free(buffer);
+	return (NULL);
+}
 
 char	*ft_strdup(const char *s1)
 {
@@ -48,13 +55,14 @@ int	ft_strchr(char *s, char c)
 			i++;
 		}
 	}
-	return (0);
+	return (-1);
 }
 
 char	*ft_getstore(int fd, char *stor)
 {
 	char	*buffer;
 	ssize_t	read_bytes;
+	char	*clean;
 
 	buffer = malloc((BUFFER_SIZE + 1) * sizeof(char));
 	if (!buffer)
@@ -62,14 +70,15 @@ char	*ft_getstore(int fd, char *stor)
 	if (!stor)
 		stor = ft_strdup("");
 	read_bytes = 1;
-	while (!ft_strchr(stor, '\n') && read_bytes != 0)
+	while (ft_strchr(stor, '\n') == -1 && read_bytes != 0)
 	{
 		read_bytes = read(fd, buffer, BUFFER_SIZE);
-		if (read_bytes == -1)
-		{
-			free(buffer);
-			return (NULL);
-		}
+		if (read_bytes == -1 && stor)
+			return (clean = freeall(stor, buffer));
+		if (read_bytes <= 0 && !stor[0])
+			return (clean = freeall(stor, buffer));
+		else if (read_bytes == 0 && stor[0])
+			break ;
 		buffer[read_bytes] = '\0';
 		stor = ft_strjoin(stor, buffer);
 	}
@@ -92,17 +101,24 @@ char	*get_next_line(int fd)
 	return (line);
 }
 
-int	main(void)
-{
-	int		fd;
-	char	*str;
+// int	main(void)
+// {
+// 	// int		fd;
+// 	// char	*str;
 
-	fd = open("file.txt", O_CREAT | O_RDONLY);
-	str = get_next_line(fd);
-	str = get_next_line(fd);
-	// str = get_next_line(fd);
-	// str = get_next_line(fd);
-	// str = get_next_line(fd);
-	// str = get_next_line(fd);
-	printf("%s", str);
-}
+// 	// fd = open("file.txt", O_CREAT | O_RDONLY);
+// 	// str = get_next_line(fd);
+// 	// printf("%s", str);
+
+// 	int		fd;
+// 	char	*str;
+
+// 	fd = open("file.txt", O_CREAT | O_RDONLY);
+
+// 	str = get_next_line(fd);
+// 	while(str)
+// 	{
+// 		printf("%s", str);
+// 		str = get_next_line(fd);
+// 	}
+// }

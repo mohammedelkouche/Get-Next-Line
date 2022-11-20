@@ -6,7 +6,7 @@
 /*   By: mel-kouc <mel-kouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 12:19:39 by mel-kouc          #+#    #+#             */
-/*   Updated: 2022/11/20 17:28:06 by mel-kouc         ###   ########.fr       */
+/*   Updated: 2022/11/20 21:45:33 by mel-kouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,4 +27,5 @@ char	*ft_strjoin(char *prdata, char *buff);
 size_t	ft_strlen(const char *s);
 char	*ft_getline(char	*str);
 char	*ft_nextstr(char *s);
+char	*ft_strdup(const char *s1);
 #endif
