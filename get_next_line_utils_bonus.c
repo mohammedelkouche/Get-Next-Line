@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line_utils.c                              :+:      :+:    :+:   */
+/*   get_next_line_utils_bonus.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mel-kouc <mel-kouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/16 12:19:29 by mel-kouc          #+#    #+#             */
-/*   Updated: 2022/11/23 18:36:14 by mel-kouc         ###   ########.fr       */
+/*   Created: 2022/11/21 09:49:25 by mel-kouc          #+#    #+#             */
+/*   Updated: 2022/11/23 18:37:23 by mel-kouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 size_t	ft_strlen(const char *s)
 {
@@ -43,16 +43,16 @@ size_t	ft_strlcpy(char *dst, const char *src, size_t len)
 char	*ft_strjoin(char *data, char *buffer)
 {
 	char	*new_data;
-	size_t	s1;
-	size_t	s2;
+	size_t	s1_s;
+	size_t	s2_s;
 
-	s1 = ft_strlen(data);
-	s2 = ft_strlen(buffer);
-	new_data = malloc((s1 + s2 + 1) * sizeof(char));
+	s1_s = ft_strlen(data);
+	s2_s = ft_strlen(buffer);
+	new_data = malloc((s1_s + s2_s + 1) * sizeof(char));
 	if (!new_data)
 		return (NULL);
-	ft_strlcpy(new_data, data, s1 + 1);
-	ft_strlcpy(new_data + s1, buffer, s2 + 1);
+	ft_strlcpy(new_data, data, s1_s + 1);
+	ft_strlcpy(new_data + s1_s, buffer, s2_s + 1);
 	free(data);
 	return (new_data);
 }

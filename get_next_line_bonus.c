@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mel-kouc <mel-kouc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/16 12:19:32 by mel-kouc          #+#    #+#             */
-/*   Updated: 2022/11/23 18:35:56 by mel-kouc         ###   ########.fr       */
+/*   Created: 2022/11/21 09:49:11 by mel-kouc          #+#    #+#             */
+/*   Updated: 2022/11/23 18:37:06 by mel-kouc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 char	*freeall(char *data, char *buffer)
 {
@@ -85,15 +85,15 @@ char	*ft_getstore(int fd, char *stor)
 
 char	*get_next_line(int fd)
 {
-	static char	*storage;
+	static char	*storage[OPEN_MAX];
 	char		*line;
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
-	storage = ft_getstore(fd, storage);
-	if (!storage)
+	storage[fd] = ft_getstore(fd, storage[fd]);
+	if (!storage[fd])
 		return (NULL);
-	line = ft_getline(storage);
-	storage = ft_nextstr(storage);
+	line = ft_getline(storage[fd]);
+	storage[fd] = ft_nextstr(storage[fd]);
 	return (line);
 }
